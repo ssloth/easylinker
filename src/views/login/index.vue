@@ -1,41 +1,42 @@
 <template>
   <div class="login-container">
-
-    <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
-
+    <el-form
+      ref="loginForm"
+      :model="loginForm"
+      :rules="loginRules"
+      class="login-form"
+      autocomplete="on"
+      label-position="left"
+    >
       <div class="title-container">
         <h3 class="title">EasyLinker</h3>
       </div>
-
       <el-form-item prop="username">
         <span class="svg-container">
-          <svg-icon icon-class="user" />
+          <svg-icon icon-class="user"/>
         </span>
-        <el-input
-          v-model="loginForm.username"
-          name="username"
-          type="text"
-          auto-complete="on"
-        />
+        <el-input v-model="loginForm.username" name="username" type="text"/>
       </el-form-item>
-
       <el-form-item prop="password">
         <span class="svg-container">
-          <svg-icon icon-class="password" />
+          <svg-icon icon-class="password"/>
         </span>
         <el-input
           :type="passwordType"
           v-model="loginForm.password"
           name="password"
-          auto-complete="on"
-          @keyup.enter.native="handleLogin" />
+          @keyup.enter.native="handleLogin"
+        />
         <span class="show-pwd" @click="showPwd">
-          <svg-icon icon-class="eye" />
+          <svg-icon icon-class="eye"/>
         </span>
       </el-form-item>
-
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">登录</el-button>
-
+      <el-button
+        :loading="loading"
+        type="primary"
+        style="width:100%;margin-bottom:30px;"
+        @click.native.prevent="handleLogin"
+      >登录</el-button>
       <div class="tips">
         <span></span>
         <span></span>
@@ -44,22 +45,14 @@
         <span style="margin-right:18px;"></span>
         <span></span>
       </div>
-
       <!-- <el-button class="thirdparty-button" type="primary" @click="showDialog=true"></el-button> -->
     </el-form>
-
-    <el-dialog :title="'ddddd'" :visible.sync="showDialog" append-to-body>
-      <br>
-      <br>
-      <br>
-      <social-sign />
-    </el-dialog>
-
   </div>
 </template>
 
 <script>
 import { isvalidUsername } from '@/utils/validate'
+import { Message } from "element-ui"
 import SocialSign from './socialsignin'
 
 export default {
@@ -97,7 +90,7 @@ export default {
   },
   watch: {
     $route: {
-      handler: function(route) {
+      handler: function (route) {
         this.redirect = route.query && route.query.redirect
       },
       immediate: true
@@ -122,9 +115,17 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          this.$store.dispatch('LoginByUsername', this.loginForm).then(() => {
+          this.$store.dispatch('LoginByUsername', this.loginForm).then(response => {
             this.loading = false
-            this.$router.push({ path: this.redirect || '/' })
+            const data = response.data;
+            console.log(data.state)
+            if (data.state == 1) {
+              this.loading = false
+              this.$router.push({ path: this.redirect || '/' })
+            } else {
+              Message.error("用戶名或密码错误")
+              return false
+            }
           }).catch(() => {
             this.loading = false
           })

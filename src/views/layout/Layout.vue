@@ -2,18 +2,20 @@
   <div class="app-wrapper">
     <sidebar class="sidebar-container"/>
     <div class="main-container">
-      <!-- <navbar/>
-      <tags-view/>
-      <app-main/>-->
+      <navbar/>
+      <app-main/>
     </div>
   </div>
 </template>
 
 <script>
-import { Siderbar } from "./lib/Sidebar";
+import Sidebar from "./Sidebar";
+import Navbar from "./Navbar";
+import AppMain from "./AppMain";
 export default {
+  name: 'Layout',
   components: {
-    Siderbar
+    Sidebar, Navbar, AppMain
   }
 }
 </script>
