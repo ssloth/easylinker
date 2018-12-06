@@ -1,56 +1,56 @@
-import { loginByUsername, logout, getUserInfo } from "@/api/user";
-import { getToken, setToken, removeToken } from "@/utils/auth";
+import { loginByUsername, logout, getUserInfo } from '@/api/user'
+import { getToken, setToken, removeToken } from '@/utils/auth'
 
 const user = {
   state: {
-    id: "",
-    username: "",
-    phone: "",
-    email: "",
+    id: '',
+    username: '',
+    phone: '',
+    email: '',
     token: getToken(),
     role: []
   },
 
   mutations: {
     SET_ID: (state, code) => {
-      state.code = code;
+      state.code = code
     },
     SET_TOKEN: (state, token) => {
-      state.token = token;
+      state.token = token
     },
     SET_ROLES: (state, role) => {
-      state.role = role;
+      state.role = role
     },
     SET_EMAIL: (state, eamil) => {
-      state.eamil = eamil;
+      state.eamil = eamil
     },
     SET_USERNAME: (state, username) => {
-      state.username = username;
+      state.username = username
     },
     SET_PHONE: (state, phone) => {
-      state.avatar = phone;
+      state.avatar = phone
     }
   },
 
   actions: {
     // 用户名登录
     LoginByUsername({ commit }, userInfo) {
-      const username = userInfo.username.trim();
+      const username = userInfo.username.trim()
       return new Promise((resolve, reject) => {
         loginByUsername(username, userInfo.password)
           .then(response => {
-            const data = response.data;
-            console.log(data);
-            if (data.state == 1) {
-              commit("SET_TOKEN", data.token);
-              setToken(response.data.token);
+            const data = response.data
+            console.log(data)
+            if (data.state === 1) {
+              commit('SET_TOKEN', data.token)
+              setToken(response.data.token)
             }
-            resolve(response);
+            resolve(response)
           })
           .catch(error => {
-            reject(error);
-          });
-      });
+            reject(error)
+          })
+      })
     },
 
     // 获取用户信息
@@ -59,23 +59,23 @@ const user = {
         getUserInfo(state.token)
           .then(response => {
             if (!response.data) {
-              reject("error");
+              reject('error')
             }
-            const data = response.data.data;
+            const data = response.data.data
             if (data.roles && data.roles.length > 0) {
-              commit("SET_ROLES", data.roles);
+              commit('SET_ROLES', data.roles)
             } else {
-              reject("getInfo: roles must be a non-null array !");
+              reject('getInfo: roles must be a non-null array !')
             }
-            commit("SET_USERNAME", data.username);
-            commit("SET_PHONE", data.phone);
-            commit("SET_EMAIL", data.email);
-            resolve(response);
+            commit('SET_USERNAME', data.username)
+            commit('SET_PHONE', data.phone)
+            commit('SET_EMAIL', data.email)
+            resolve(response)
           })
           .catch(error => {
-            reject(error);
-          });
-      });
+            reject(error)
+          })
+      })
     },
 
     // 登出
@@ -83,26 +83,26 @@ const user = {
       return new Promise((resolve, reject) => {
         logout(state.token)
           .then(() => {
-            commit("SET_TOKEN", "");
-            commit("SET_ROLES", []);
-            removeToken();
-            resolve();
+            commit('SET_TOKEN', '')
+            commit('SET_ROLES', [])
+            removeToken()
+            resolve()
           })
           .catch(error => {
-            reject(error);
-          });
-      });
+            reject(error)
+          })
+      })
     },
 
     // 前端 登出
     FedLogOut({ commit }) {
       return new Promise(resolve => {
-        commit("SET_TOKEN", "");
-        removeToken();
-        resolve();
-      });
+        commit('SET_TOKEN', '')
+        removeToken()
+        resolve()
+      })
     }
   }
-};
+}
 
-export default user;
+export default user

@@ -37,12 +37,17 @@
 </template>
 
 <script>
-import UiSplitBar from "@/components/UI/Split/SplitBar";
-import CardItem from "./CardItem";
-import LogList from "./LogList";
-import ServerStatus from "./ServerStatus";
+import UiSplitBar from '@/components/UI/Split/SplitBar'
+import CardItem from './components/CardItem'
+import LogList from './components/LogList'
+import ServerStatus from './components/ServerStatus'
 export default {
-  components: { UiSplitBar, CardItem, LogList, ServerStatus }
+  components: {
+    UiSplitBar,
+    CardItem,
+    LogList,
+    ServerStatus
+  }
 }
 </script>
 
@@ -64,4 +69,3 @@ export default {
   }
 }
 </style>
-

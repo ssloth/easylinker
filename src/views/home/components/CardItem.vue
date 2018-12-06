@@ -13,13 +13,25 @@
 
 <script>
 export default {
-  props: ["number", "text", "direction"],
+  props: {
+    number: {
+      type: Number,
+      default: 0
+    },
+    text: {
+      type: String,
+      default: ''
+    },
+    direction: {
+      type: String,
+      default: ''
+    }
+  },
   computed: {
     isLevel: function () { return this.direction == "level" }
   }
 }
 </script>
-
 
 <style lang="scss" scoped>
 .card-item {

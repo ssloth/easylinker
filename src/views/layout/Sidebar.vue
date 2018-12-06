@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import SidebarItem from "./lib/SidebarItem";
+import SidebarItem from "./components/SidebarItem";
 import { mapGetters } from 'vuex';
 import { constantRouterMap } from "@/router";
 export default {

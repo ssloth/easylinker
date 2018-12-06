@@ -1,58 +1,58 @@
-import Vue from "vue";
-import Router from "vue-router";
+import Vue from 'vue'
+import Router from 'vue-router'
 
-import Layout from "@/views/layout/Layout";
+import Layout from '@/views/layout/Layout'
 
-Vue.use(Router);
+Vue.use(Router)
 
 export const constantRouterMap = [
   {
-    path: "/login",
-    component: () => import("@/views/login"),
+    path: '/login',
+    component: () => import('@/views/login'),
     hidden: true
   },
   {
-    path: "",
+    path: '',
     component: Layout,
-    redirect: "home",
+    redirect: 'home',
     children: [
       {
-        path: "home",
-        component: () => import("@/views/home"),
-        name: "home",
-        meta: { title: "系统首页", icon: "dashboard", noCache: true }
+        path: 'home',
+        component: () => import('@/views/home'),
+        name: 'home',
+        meta: { title: '系统首页', icon: 'dashboard', noCache: true }
       }
     ]
   },
   {
-    path: "/table",
+    path: '/table',
     component: Layout,
-    redirect: "table",
+    redirect: 'table',
     children: [
       {
-        path: "",
-        component: () => import("@/views/home"),
-        name: "table",
-        meta: { title: "设备列表", icon: "table", noCache: true }
+        path: '',
+        component: () => import('@/views/home'),
+        name: 'table',
+        meta: { title: '设备列表', icon: 'table', noCache: true }
       }
     ]
   },
   {
-    path: "/group",
+    path: '/group',
     component: Layout,
-    redirect: "group",
+    redirect: 'group',
     children: [
       {
-        path: "",
-        component: () => import("@/views/home"),
-        name: "group",
-        meta: { title: "分组操作", icon: "group", noCache: true }
+        path: '',
+        component: () => import('@/views/home'),
+        name: 'group',
+        meta: { title: '分组操作', icon: 'group', noCache: true }
       }
     ]
   }
-];
+]
 
 export default new Router({
   base: process.env.BASE_URL,
   routes: constantRouterMap
-});
+})

@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import LogItem from "./lib/LogItem";
+import LogItem from "./LogItem";
 export default {
   name: "LogList",
   data() {
