@@ -5,7 +5,7 @@
     <div class="right-menu">
       <!-- <el-tooltip effect="dark" placement="bottom">
         <screenfull class="screenfull right-menu-item"/>
-      </el-tooltip>-->
+      </el-tooltip> -->
       <!-- <lang-select class="international right-menu-item"/>
       <el-tooltip effect="dark" placement="bottom">
         <theme-picker class="theme-switch right-menu-item"/>

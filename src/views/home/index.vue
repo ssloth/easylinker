@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <div class="console">
-      <ui-split-bar :title="'综述'"></ui-split-bar>
+      <ui-split-bar :title="'综述'" />
       <el-row :gutter="20">
         <el-col :lg="12" :md="24">
           <el-card body-style="padding:10px" shadow="never">
@@ -10,27 +10,27 @@
             </div>
             <el-row>
               <el-col :span="7">
-                <card-item :number="'0'" :text="'设备总量'"></card-item>
+                <card-item :number="0" :text="'设备总量'" />
               </el-col>
               <el-col :span="7">
-                <card-item :number="'0'" :text="'在线设备'"></card-item>
+                <card-item :number="0" :text="'在线设备'" />
               </el-col>
               <el-col :span="10">
-                <card-item :direction="'level'" :number="'0'" :text="'掉线项目'"></card-item>
-                <card-item :direction="'level'" :number="'0'" :text="'离线项目'"></card-item>
+                <card-item :direction="'level'" :number="0" :text="'掉线项目'" />
+                <card-item :direction="'level'" :number="0" :text="'离线项目'" />
               </el-col>
             </el-row>
           </el-card>
         </el-col>
         <el-col :lg="12" :md="24">
-          <server-status></server-status>
+          <server-status />
         </el-col>
       </el-row>
     </div>
     <div class="aside">
-      <ui-split-bar :title="'日志'"></ui-split-bar>
+      <ui-split-bar :title="'日志'" />
       <el-card body-style="padding:10px" shadow="never">
-        <log-list :data="'data'"></log-list>
+        <log-list :data="'data'" />
       </el-card>
     </div>
   </div>

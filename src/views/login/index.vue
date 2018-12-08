@@ -13,22 +13,22 @@
       </div>
       <el-form-item prop="username">
         <span class="svg-container">
-          <svg-icon icon-class="user"/>
+          <svg-icon icon-class="user" />
         </span>
-        <el-input v-model="loginForm.username" name="username" type="text"/>
+        <el-input v-model="loginForm.username" name="username" type="text" />
       </el-form-item>
       <el-form-item prop="password">
         <span class="svg-container">
-          <svg-icon icon-class="password"/>
+          <svg-icon icon-class="password" />
         </span>
         <el-input
-          :type="passwordType"
           v-model="loginForm.password"
+          :type="passwordType"
           name="password"
           @keyup.enter.native="handleLogin"
         />
         <span class="show-pwd" @click="showPwd">
-          <svg-icon icon-class="eye"/>
+          <svg-icon icon-class="eye" />
         </span>
       </el-form-item>
       <el-button
@@ -37,14 +37,7 @@
         style="width:100%;margin-bottom:30px;"
         @click.native.prevent="handleLogin"
       >登录</el-button>
-      <div class="tips">
-        <span></span>
-        <span></span>
-      </div>
-      <div class="tips">
-        <span style="margin-right:18px;"></span>
-        <span></span>
-      </div>
+
       <!-- <el-button class="thirdparty-button" type="primary" @click="showDialog=true"></el-button> -->
     </el-form>
   </div>
@@ -52,12 +45,12 @@
 
 <script>
 import { isvalidUsername } from '@/utils/validate'
-import { Message } from "element-ui"
-import SocialSign from './socialsignin'
+import { Message } from 'element-ui'
+// import SocialSign from './socialsignin'
 
 export default {
   name: 'Login',
-  components: { SocialSign },
+  // components: { SocialSign },
   data() {
     const validateUsername = (rule, value, callback) => {
       if (!isvalidUsername(value)) {
@@ -75,8 +68,8 @@ export default {
     }
     return {
       loginForm: {
-        username: '',
-        password: ''
+        username: 'wangwenhai',
+        password: 'wangwenhai'
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
@@ -90,7 +83,7 @@ export default {
   },
   watch: {
     $route: {
-      handler: function (route) {
+      handler: function(route) {
         this.redirect = route.query && route.query.redirect
       },
       immediate: true
@@ -117,13 +110,13 @@ export default {
           this.loading = true
           this.$store.dispatch('LoginByUsername', this.loginForm).then(response => {
             this.loading = false
-            const data = response.data;
+            const data = response.data
             console.log(data.state)
-            if (data.state == 1) {
+            if (data.state === 1) {
               this.loading = false
               this.$router.push({ path: this.redirect || '/' })
             } else {
-              Message.error("用戶名或密码错误")
+              Message.error('用戶名或密码错误')
               return false
             }
           }).catch(() => {

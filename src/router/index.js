@@ -31,7 +31,7 @@ export const constantRouterMap = [
     children: [
       {
         path: '',
-        component: () => import('@/views/home'),
+        component: () => import('@/views/clients'),
         name: 'table',
         meta: { title: '设备列表', icon: 'table', noCache: true }
       }
@@ -44,7 +44,7 @@ export const constantRouterMap = [
     children: [
       {
         path: '',
-        component: () => import('@/views/home'),
+        component: () => import('@/views/group'),
         name: 'group',
         meta: { title: '分组操作', icon: 'group', noCache: true }
       }

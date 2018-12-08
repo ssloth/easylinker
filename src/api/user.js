@@ -6,7 +6,7 @@ export function loginByUsername(loginParam, password) {
     password
   }
   return request({
-    url: '/api/userLogin',
+    url: '/userLogin',
     method: 'post',
     data
   })
