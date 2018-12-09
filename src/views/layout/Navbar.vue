@@ -1,6 +1,6 @@
 <template>
   <div class="navbar">
-    <hamburger :toggle-click="toggleSideBar" :is-active="true" class="hamburger-container"/>
+    <hamburger :toggle-click="toggleSideBar" :is-active="true" class="hamburger-container" />
     <!-- <breadcrumb class="breadcrumb-container"/> -->
     <div class="right-menu">
       <!-- <el-tooltip effect="dark" placement="bottom">
@@ -16,8 +16,8 @@
 
 <script>
 import { mapGetters } from 'vuex'
-// import Screenfull from "@/components/Screenfull";
-import Hamburger from '@/components/Hamburger';
+// import Screenfull from "@/components/Screenfull"
+import Hamburger from '@/components/Hamburger'
 // import Breadcrumb from '@/components/Breadcrumb'
 // import ErrorLog from '@/components/ErrorLog'
 // import SizeSelect from '@/components/SizeSelect'
@@ -26,7 +26,7 @@ import Hamburger from '@/components/Hamburger';
 
 export default {
   components: {
-    Hamburger,
+    Hamburger
     // Screenfull,
     // SizeSelect,
   },

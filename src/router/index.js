@@ -38,15 +38,15 @@ export const constantRouterMap = [
     ]
   },
   {
-    path: '/group',
+    path: '/setting',
     component: Layout,
-    redirect: 'group',
+    redirect: 'setting',
     children: [
       {
         path: '',
-        component: () => import('@/views/group'),
-        name: 'group',
-        meta: { title: '分组操作', icon: 'group', noCache: true }
+        component: () => import('@/views/setting'),
+        name: 'setting',
+        meta: { title: '系统配置', icon: 'setting', noCache: true }
       }
     ]
   }
