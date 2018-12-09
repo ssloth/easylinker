@@ -1,6 +1,5 @@
 # easylinker
 
-## 开发中....暂时不能运行
 
 ## Project setup
 
@@ -19,19 +18,3 @@ yarn run serve
 ```
 yarn run build
 ```
-
-### Run your tests
-
-```
-yarn run test
-```
-
-### Lints and fixes files
-
-```
-yarn run lint
-```
-
-### Customize configuration
-
-See [Configuration Reference](https://cli.vuejs.org/config/).
