@@ -1,12 +1,15 @@
 <template>
-  <div class="card-item" :class="[isLevel?'level':'vertical']">
+  <div
+    class="card-item"
+    :class="[isLevel?'level':'vertical']"
+  >
     <template v-if="!isLevel">
-      <div class="number">{{number}}</div>
-      <div class="text">{{text}}</div>
+      <div class="number">{{ number }}</div>
+      <div class="text">{{ text }}</div>
     </template>
     <template v-else>
-      <div class="text">{{text}}</div>
-      <div class="number">{{number}}</div>
+      <div class="text">{{ text }}</div>
+      <div class="number">{{ number }}</div>
     </template>
   </div>
 </template>
@@ -28,7 +31,9 @@ export default {
     }
   },
   computed: {
-    isLevel: function () { return this.direction == "level" }
+    isLevel: function() {
+      return this.direction === 'level'
+    }
   }
 }
 </script>

@@ -1,8 +1,9 @@
 import axios from 'axios'
-import { Message, MessageBox } from 'element-ui'
 import store from '@/store'
+import { Message, MessageBox } from 'element-ui'
 import { getToken } from '@/utils/auth'
-
+import { STATE_CODE } from '@/config'
+const { TOKEN_EXPIRED } = STATE_CODE
 // create an axios instance
 const service = axios.create({
   baseURL: '/api', // api 的 base_url
@@ -29,7 +30,7 @@ service.interceptors.request.use(
 // response 拦截器
 service.interceptors.response.use(
   response => {
-    if (response.data.state === 402) {
+    if (TOKEN_EXPIRED.find(item => response.data.state === item)) {
       MessageBox.confirm('令牌过期，请重新登录', '确定登出', {
         confirmButtonText: '重新登录',
         cancelButtonText: '取消',

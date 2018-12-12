@@ -8,8 +8,14 @@
     text-color="#bfcbd9"
     active-text-color="#409EFF"
   >
-    <el-menu-item :disabled="true" index="0">
-      <div class="logo" slot="title">EasyLinker</div>
+    <el-menu-item
+      :disabled="true"
+      index="0"
+    >
+      <div
+        slot="title"
+        class="logo"
+      >EasyLinker</div>
     </el-menu-item>
     <sidebar-item
       v-for="route in constantRouterMap"
@@ -21,25 +27,28 @@
 </template>
 
 <script>
-import SidebarItem from "./components/SidebarItem";
-import { mapGetters } from 'vuex';
-import { constantRouterMap } from "@/router";
+import SidebarItem from './components/SidebarItem'
+import { mapGetters } from 'vuex'
+import { constantRouterMap } from '@/router'
 export default {
-  data() {
-    return {}
-  },
-  created() {
-    this.constantRouterMap = constantRouterMap;
-  },
-  name: "Sidebar",
+  name: 'Sidebar',
   components: { SidebarItem },
+  data() {
+    return {
+
+    }
+  },
   computed: {
     ...mapGetters([
       'sidebar'
     ]),
     isCollapse() {
       // return !this.sidebar.opened
+      return true
     }
+  },
+  created() {
+    this.constantRouterMap = constantRouterMap
   }
 }
 </script>

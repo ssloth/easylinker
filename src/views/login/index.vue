@@ -11,11 +11,11 @@
       <div class="title-container">
         <h3 class="title">EasyLinker</h3>
       </div>
-      <el-form-item prop="username">
+      <el-form-item prop="loginParam">
         <span class="svg-container">
           <svg-icon icon-class="user" />
         </span>
-        <el-input v-model="loginForm.username" name="username" type="text" />
+        <el-input v-model="loginForm.loginParam" name="loginParam" type="text" />
       </el-form-item>
       <el-form-item prop="password">
         <span class="svg-container">
@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import { isvalidUsername } from '@/utils/validate'
+import { isvalidloginParam } from '@/utils/validate'
 import { Message } from 'element-ui'
 // import SocialSign from './socialsignin'
 
@@ -52,8 +52,8 @@ export default {
   name: 'Login',
   // components: { SocialSign },
   data() {
-    const validateUsername = (rule, value, callback) => {
-      if (!isvalidUsername(value)) {
+    const validateloginParam = (rule, value, callback) => {
+      if (!isvalidloginParam(value)) {
         callback(new Error('Please enter the correct user name'))
       } else {
         callback()
@@ -68,11 +68,11 @@ export default {
     }
     return {
       loginForm: {
-        username: 'wangwenhai',
+        loginParam: 'wangwenhai',
         password: 'wangwenhai'
       },
       loginRules: {
-        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
+        loginParam: [{ required: true, trigger: 'blur', validator: validateloginParam }],
         password: [{ required: true, trigger: 'blur', validator: validatePassword }]
       },
       passwordType: 'password',
@@ -108,7 +108,7 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          this.$store.dispatch('LoginByUsername', this.loginForm).then(response => {
+          this.$store.dispatch('LoginByloginParam', this.loginForm).then(response => {
             this.loading = false
             const data = response.data
             console.log(data.state)

@@ -15,10 +15,10 @@ export function getClientInfo(id) {
 /**
  * 获取用户的设备列表
  */
-export function getCurrentUserClient() {
+export function getCurrentUserClient(page = 0, count = 10) {
   return request({
     method: 'get',
-    url: `${API}/client/0/10`
+    url: `${API}/client/${page}/ß${count}`
   })
 }
 
@@ -34,7 +34,7 @@ export function createClient(name, info, topic, alc, group) {
   const data = { name, info, topic, alc, group }
   return request({
     method: 'post',
-    url: `${API}/client/0/10`,
+    url: `${API}/client`,
     data
   })
 }
@@ -43,10 +43,10 @@ export function createClient(name, info, topic, alc, group) {
  * 获取设备数据
  * @param {*} id
  */
-export function getClientData(id) {
+export function getClientData(id, page = 0, count = 10) {
   return request({
     method: 'get',
-    url: `${API}/client/data/${id}/0/10`
+    url: `${API}/client/data/${id}/${page}/${count}`
   })
 }
 

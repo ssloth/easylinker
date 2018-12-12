@@ -5,7 +5,7 @@ import request from '@/utils/request'
  * @param {*} loginParam
  * @param {*} password
  */
-export function loginByUsername(loginParam, password) {
+export function LoginByloginParam(loginParam, password) {
   const data = {
     loginParam,
     password
@@ -78,11 +78,10 @@ export function logout() {
  * 获取用户信息
  * @param {*} token
  */
-export function getUserInfo(token) {
+export function getUserInfo() {
   return request({
     url: '/api/user',
-    method: 'get',
-    params: { token }
+    method: 'get'
   })
 }
 

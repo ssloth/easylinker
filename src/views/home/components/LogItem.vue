@@ -1,22 +1,23 @@
 <template>
   <div class="log-item">
-    <div class="date">{{date}}</div>
+    <div class="date">{{ date }}</div>
     <span :class="status" class="log-text">
       [
-      <span>{{event}}</span>
+      <span>{{ event }}</span>
       ]
     </span>
-    <span class="device-id">{{deviceId}}</span>
+    <span class="device-id">{{ deviceId }}</span>
   </div>
 </template>
 
 <script>
 export default {
-  name: "LogItem",
-  props: ["date", "deviceId", "event"],
+  name: 'LogItem',
+  // eslint-disable-next-line
+  props: ['date', 'deviceId', 'event'],
   computed: {
-    status: function () {
-      return this.event == "DISCONNECT" ? "disconnent" : "connect";
+    status() {
+      return this.event === 'DISCONNECT' ? 'disconnent' : 'connect'
     }
   }
 }
@@ -53,5 +54,4 @@ export default {
   }
 }
 </style>
-
 

@@ -1,13 +1,14 @@
 <template>
   <div id="app">
-    <router-view/>
+    <router-view />
   </div>
 </template>
 
 <script>
 export default {
-  name: "app",
-};
+// eslint-disable-next-line
+  name: 'app'
+}
 </script>
 
 <style>

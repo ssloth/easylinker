@@ -53,7 +53,7 @@
         <template slot-scope="scope">
           <el-button
             size="mini"
-            @click="handleEdit(scope.$index, scope.row)"
+            @click="handleDetail(scope.$index, scope.row)"
           >详细</el-button>
           <el-button
             size="mini"
@@ -76,6 +76,7 @@
         :total="10"
       />
       <el-button
+        style="margin:3px"
         size="small"
         icon="el-icon-plus"
         @click="handleCreate"
@@ -90,7 +91,7 @@
 
 <script>
 import { getCurrentUserClient, deleteClient } from '@/api/client'
-import Create from './create'
+import Create from './Create'
 const defaultQuery = {
   page: 0,
   count: 10
@@ -116,6 +117,9 @@ export default {
   methods: {
     handleEdit(index, row) {
       console.log(index, row)
+    },
+    handleDetail(index, row) {
+      this.$router.push(`/client/detail?id=${row.id}`)
     },
     handleDelete(index, row) {
       this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {

@@ -1,13 +1,22 @@
 <template>
   <div class="split-bar">
-    <div class="title">{{title}}</div>
-    <div class="aside-title">{{asideTitle}}</div>
+    <div class="title">{{ title }}</div>
+    <div class="aside-title">{{ asideTitle }}</div>
   </div>
 </template>
 
 <script>
 export default {
-  props: ["title", "asideTitle"]
+  props: {
+    title: {
+      type: String,
+      default: ''
+    },
+    asideTitle: {
+      type: String,
+      default: ''
+    }
+  }
 }
 </script>
 

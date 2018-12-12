@@ -8,7 +8,6 @@ import './icons' // icon
 import '@/styles/index.scss' // global css
 import './plugins/element-variables.scss'
 import './permission' // permission control
-
 Vue.use(Element)
 Vue.config.productionTip = false
 

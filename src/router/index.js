@@ -25,15 +25,21 @@ export const constantRouterMap = [
     ]
   },
   {
-    path: '/table',
+    path: '/client',
     component: Layout,
     redirect: 'table',
     children: [
       {
         path: '',
-        component: () => import('@/views/clients'),
+        component: () => import('@/views/clients/List'),
         name: 'table',
         meta: { title: '设备列表', icon: 'table', noCache: true }
+      },
+      {
+        path: 'detail',
+        component: () => import('@/views/clients/Detail'),
+        name: 'detail',
+        hidden: true
       }
     ]
   },
