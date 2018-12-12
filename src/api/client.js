@@ -27,11 +27,11 @@ export function getCurrentUserClient(page = 0, count = 10) {
  * @param {*} name
  * @param {*} info
  * @param {*} topic
- * @param {*} alc
+ * @param {*} alcs
  * @param {*} group
  */
-export function createClient(name, info, topic, alc, group) {
-  const data = { name, info, topic, alc, group }
+export function createClient(name, info, topic, alcs, group) {
+  const data = { name, info, topic, alcs, group }
   return request({
     method: 'post',
     url: `${API}/client`,

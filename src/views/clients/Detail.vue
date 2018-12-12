@@ -43,35 +43,64 @@
           <el-table
             :data="tableData"
             style="width: 100%"
-            max-height="450"
+            :max-height="tableHeight"
           >
             <el-table-column
               label="时间"
-              width="150"
-              prop="date"
+              width="100"
+              prop="createTime"
+            >
+              <template slot-scope="scope">
+                <span>{{ scope.row.date | filtersDate }}</span>
+              </template>
+            </el-table-column>
+            <el-table-column
+              label="信息"
+              width="100"
+              prop="info"
             />
             <el-table-column
               label="数据"
-              min-width="80"
+              min-width="180"
               prop="data"
               show-overflow-tooltip
-            />
+            >
+              <template slot-scope="scope">
+                <span>{{ scope.row.data | filtersData }}</span>
+              </template>
+            </el-table-column>
             <el-table-column
               fixed="right"
               label="操作"
               width="100"
             >
               <template slot-scope="scope">
-                <el-button
+                <!-- <el-button
                   type="text"
                   size="small"
-                  @click.native.prevent="handleCopy(scope.row,this)"
+                  @click.native.prevent="handleView(scope.row)"
+                >
+                  查看
+                </el-button> -->
+                <el-button
+                  :class="'hook-copy-'+scope.row.id"
+                  type="text"
+                  size="small"
+                  :data-clipboard-text="scope.row.data | filtersData"
+                  @click.native.prevent="handleCopy(scope.row)"
                 >
                   复制
                 </el-button>
               </template>
             </el-table-column>
           </el-table>
+          <el-pagination
+            class="pagination"
+            :current-page.sync="query.page"
+            background
+            layout="prev, pager, next"
+            :total="totalElements"
+          />
         </el-card>
       </el-col>
     </el-row>
@@ -80,17 +109,38 @@
 
 <script>
 import { getClientInfo, getClientData } from '@/api/client'
+import Clipboard from 'clipboard'
 const defaultQuery = {
   page: 0,
   count: 10
 }
 export default {
+  filters: {
+    filtersData(value) {
+      return JSON.stringify(value)
+    },
+    filtersDate(value) {
+      return new Date(value)
+    }
+  },
   data() {
     return {
+      id: null,
       detail: [],
       tableData: [],
       query: Object.assign({}, defaultQuery),
-      pageable: {}
+      totalElements: 0
+    }
+  },
+  computed: {
+    tableHeight() {
+      return window.screen.height - 250
+    }
+  },
+  watch: {
+    $route() {
+      this._getDetail()
+      this._getData()
     }
   },
   created() {
@@ -98,16 +148,25 @@ export default {
     this._getData()
   },
   methods: {
-    handleCopy(row, e) {
-      const input = document.createElement('input').value = row.data
-      input.select()
-      console.log(input.value, e)
-      input.execCommand('Copy')
+    handleCopy(row) {
+      const clipboard = new Clipboard('.hook-copy-' + row.id)
+      clipboard.on('success', e => {
+        this.$message.success('已复制到剪贴板！')
+        clipboard.destroy()
+      })
+      clipboard.on('error', e => {
+        console.log('该浏览器不支持自动复制')
+        clipboard.destroy()
+      })
+    },
+    handleView(row) {
+
     },
     _getDetail() {
       const id = this.$route.query.id
       getClientInfo(id).then(res => {
         const data = res.data
+        this.detail = []
         if (res.data.state === 1) {
           const ret = data.data
           this.detail.push(['设备Id', ret.id])
@@ -121,9 +180,9 @@ export default {
       const id = this.$route.query.id
       const { page, count } = this.query
       getClientData(id, page, count).then(res => {
-        // const data = res.data.content
-        const data = [{ date: '2018-9-12 12:20:21', data: `{"data":{"content":[],"pageable":{"sort":{"sorted":true,"unsorted":false,"empty":false},"pageSize":10,"pageNumber":0,"offset":0,"paged":true,"unpaged":false},"totalPages":0,"totalElements":0,"last":true,"first":true,"sort":{"sorted":true,"unsorted":false,"empty":false},"numberOfElements":0,"size":10,"number":0,"empty":true},"state":1,"message":"查询成功!"}` }, { date: '2018-9-12 12:20:21', data: `{"data":{"content":[],"pageable":{"sort":{"sorted":true,"unsorted":false,"empty":false},"pageSize":10,"pageNumber":0,"offset":0,"paged":true,"unpaged":false},"totalPages":0,"totalElements":0,"last":true,"first":true,"sort":{"sorted":true,"unsorted":false,"empty":false},"numberOfElements":0,"size":10,"number":0,"empty":true},"state":1,"message":"查询成功!"}` }, { date: '2018-9-12 12:20:21', data: `{"data":{"content":[],"pageable":{"sort":{"sorted":true,"unsorted":false,"empty":false},"pageSize":10,"pageNumber":0,"offset":0,"paged":true,"unpaged":false},"totalPages":0,"totalElements":0,"last":true,"first":true,"sort":{"sorted":true,"unsorted":false,"empty":false},"numberOfElements":0,"size":10,"number":0,"empty":true},"state":1,"message":"查询成功!"}` }, { date: '2018-9-12 12:20:21', data: `{"data":{"content":[],"pageable":{"sort":{"sorted":true,"unsorted":false,"empty":false},"pageSize":10,"pageNumber":0,"offset":0,"paged":true,"unpaged":false},"totalPages":0,"totalElements":0,"last":true,"first":true,"sort":{"sorted":true,"unsorted":false,"empty":false},"numberOfElements":0,"size":10,"number":0,"empty":true},"state":1,"message":"查询成功!"}` }, { date: '2018-9-12 12:20:21', data: `{"data":{"content":[],"pageable":{"sort":{"sorted":true,"unsorted":false,"empty":false},"pageSize":10,"pageNumber":0,"offset":0,"paged":true,"unpaged":false},"totalPages":0,"totalElements":0,"last":true,"first":true,"sort":{"sorted":true,"unsorted":false,"empty":false},"numberOfElements":0,"size":10,"number":0,"empty":true},"state":1,"message":"查询成功!"}` }, { date: '2018-9-12 12:20:21', data: `{"data":{"content":[],"pageable":{"sort":{"sorted":true,"unsorted":false,"empty":false},"pageSize":10,"pageNumber":0,"offset":0,"paged":true,"unpaged":false},"totalPages":0,"totalElements":0,"last":true,"first":true,"sort":{"sorted":true,"unsorted":false,"empty":false},"numberOfElements":0,"size":10,"number":0,"empty":true},"state":1,"message":"查询成功!"}` }, { date: '2018-9-12 12:20:21', data: `{"data":{"content":[],"pageable":{"sort":{"sorted":true,"unsorted":false,"empty":false},"pageSize":10,"pageNumber":0,"offset":0,"paged":true,"unpaged":false},"totalPages":0,"totalElements":0,"last":true,"first":true,"sort":{"sorted":true,"unsorted":false,"empty":false},"numberOfElements":0,"size":10,"number":0,"empty":true},"state":1,"message":"查询成功!"}` }, { date: '2018-9-12 12:20:21', data: `{"data":{"content":[],"pageable":{"sort":{"sorted":true,"unsorted":false,"empty":false},"pageSize":10,"pageNumber":0,"offset":0,"paged":true,"unpaged":false},"totalPages":0,"totalElements":0,"last":true,"first":true,"sort":{"sorted":true,"unsorted":false,"empty":false},"numberOfElements":0,"size":10,"number":0,"empty":true},"state":1,"message":"查询成功!"}` }, { date: '2018-9-12 12:20:21', data: `{"data":{"content":[],"pageable":{"sort":{"sorted":true,"unsorted":false,"empty":false},"pageSize":10,"pageNumber":0,"offset":0,"paged":true,"unpaged":false},"totalPages":0,"totalElements":0,"last":true,"first":true,"sort":{"sorted":true,"unsorted":false,"empty":false},"numberOfElements":0,"size":10,"number":0,"empty":true},"state":1,"message":"查询成功!"}` }, { date: '2018-9-12 12:20:21', data: `{"data":{"content":[],"pageable":{"sort":{"sorted":true,"unsorted":false,"empty":false},"pageSize":10,"pageNumber":0,"offset":0,"paged":true,"unpaged":false},"totalPages":0,"totalElements":0,"last":true,"first":true,"sort":{"sorted":true,"unsorted":false,"empty":false},"numberOfElements":0,"size":10,"number":0,"empty":true},"state":1,"message":"查询成功!"}` }, { date: '2018-9-12 12:20:21', data: `{"data":{"content":[],"pageable":{"sort":{"sorted":true,"unsorted":false,"empty":false},"pageSize":10,"pageNumber":0,"offset":0,"paged":true,"unpaged":false},"totalPages":0,"totalElements":0,"last":true,"first":true,"sort":{"sorted":true,"unsorted":false,"empty":false},"numberOfElements":0,"size":10,"number":0,"empty":true},"state":1,"message":"查询成功!"}` }, { date: '2018-9-12 12:20:21', data: `{"data":{"content":[],"pageable":{"sort":{"sorted":true,"unsorted":false,"empty":false},"pageSize":10,"pageNumber":0,"offset":0,"paged":true,"unpaged":false},"totalPages":0,"totalElements":0,"last":true,"first":true,"sort":{"sorted":true,"unsorted":false,"empty":false},"numberOfElements":0,"size":10,"number":0,"empty":true},"state":1,"message":"查询成功!"}` }, { date: '2018-9-12 12:20:21', data: `{"data":{"content":[],"pageable":{"sort":{"sorted":true,"unsorted":false,"empty":false},"pageSize":10,"pageNumber":0,"offset":0,"paged":true,"unpaged":false},"totalPages":0,"totalElements":0,"last":true,"first":true,"sort":{"sorted":true,"unsorted":false,"empty":false},"numberOfElements":0,"size":10,"number":0,"empty":true},"state":1,"message":"查询成功!"}` }, { date: '2018-9-12 12:20:21', data: `{"data":{"content":[],"pageable":{"sort":{"sorted":true,"unsorted":false,"empty":false},"pageSize":10,"pageNumber":0,"offset":0,"paged":true,"unpaged":false},"totalPages":0,"totalElements":0,"last":true,"first":true,"sort":{"sorted":true,"unsorted":false,"empty":false},"numberOfElements":0,"size":10,"number":0,"empty":true},"state":1,"message":"查询成功!"}` }, { date: '2018-9-12 12:20:21', data: `{"data":{"content":[],"pageable":{"sort":{"sorted":true,"unsorted":false,"empty":false},"pageSize":10,"pageNumber":0,"offset":0,"paged":true,"unpaged":false},"totalPages":0,"totalElements":0,"last":true,"first":true,"sort":{"sorted":true,"unsorted":false,"empty":false},"numberOfElements":0,"size":10,"number":0,"empty":true},"state":1,"message":"查询成功!"}` }]
-        this.tableData = data
+        const { content, totalElements } = res.data.data
+        this.tableData = content
+        this.totalElements = totalElements
       })
     }
   }

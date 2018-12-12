@@ -1,7 +1,7 @@
 
 <template>
-  <!-- eslint-plugin-vue vue/require-component-is-->
-  <component v-bind="linkProps(to)">
+  <!-- eslint-disable vue/require-component-is-->
+  <component :is="'div'" v-bind="linkProps(to)">
     <slot />
   </component>
 </template>

@@ -1,5 +1,6 @@
 <template>
   <el-menu
+    class="el-menu"
     :show-timeout="200"
     :default-active="$route.path"
     :collapse="isCollapse"
@@ -43,8 +44,7 @@ export default {
       'sidebar'
     ]),
     isCollapse() {
-      // return !this.sidebar.opened
-      return true
+      return !this.sidebar.opened
     }
   },
   created() {
@@ -52,9 +52,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-.logo {
-  text-align: center;
-}
-</style>

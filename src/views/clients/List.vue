@@ -70,10 +70,10 @@
     <div class="block">
       <el-pagination
         class="pagination"
-        :current-page.sync="currentPage"
+        :current-page.sync="query.page"
         background
         layout="prev, pager, next"
-        :total="10"
+        :total="totalElements"
       />
       <el-button
         style="margin:3px"
@@ -84,6 +84,7 @@
     </div>
     <create
       :visible="createDialogdShow"
+      :edit-data="editData"
       @onClose="onCreateColse"
     />
   </div>
@@ -106,9 +107,10 @@ export default {
   data() {
     return {
       query: Object.assign({}, defaultQuery),
-      currentPage: 0,
+      totalElements: 0,
       tableData: [],
-      createDialogdShow: false
+      createDialogdShow: false,
+      editData: {}
     }
   },
   created() {
@@ -116,7 +118,8 @@ export default {
   },
   methods: {
     handleEdit(index, row) {
-      console.log(index, row)
+      this.createDialogdShow = true
+      this.editData = Object.assign({}, row)
     },
     handleDetail(index, row) {
       this.$router.push(`/client/detail?id=${row.id}`)
@@ -141,6 +144,7 @@ export default {
       })
     },
     handleCreate() {
+      this.editData = {}
       this.createDialogdShow = true
     },
     onCreateColse() {
@@ -152,7 +156,7 @@ export default {
         const data = res.data
         if (res.data.state === 1) {
           this.tableData = data.data.content
-          console.log(this.tableData)
+          this.totalElements = data.data.totalElements
         }
       }).catch(e => console.log(e))
     }

@@ -22,6 +22,7 @@
             v-for="(item,index) in form.acls"
             :key="index"
             closable
+            @close="handleTagRemove(index)"
           >
             {{ item.acl | aclFilter }}
           </el-tag>
@@ -76,6 +77,10 @@ export default {
     visible: {
       type: Boolean,
       default: false
+    },
+    editData: {
+      type: Object,
+      default: _ => ({})
     }
   },
   data() {
@@ -84,15 +89,23 @@ export default {
         name: '',
         info: '',
         acls: [],
+        topic: '',
         group: Object.assign([], defaultGroup)
       },
       acl: null,
       aclVisible: false
     }
   },
+  watch: {
+    editData() {
+      console.log(this.editData)
+      this.form = Object.assign(this.form, this.editData)
+    }
+  },
   methods: {
     handleSubmit() {
-      createClient(this.form).then(res => {
+      const { name, info, topic, acls, group } = this.form
+      createClient(name, info, topic, acls, group).then(res => {
         if (res.data.state !== 200) {
           return this.$message.error(res.data.message)
         }
@@ -101,6 +114,9 @@ export default {
     },
     handleClose() {
       this.$emit('onClose', false)
+    },
+    handleTagRemove(index) {
+      this.form.acls.splice(index, 1)
     },
     handleAddAcl(id) {
 

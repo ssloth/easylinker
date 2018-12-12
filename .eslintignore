@@ -1,5 +1,5 @@
 build/*.js
 config/*.js
 src/assets
+src/views/layout
 *.config.js
-views/layout/*
