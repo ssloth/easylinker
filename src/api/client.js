@@ -18,7 +18,7 @@ export function getClientInfo(id) {
 export function getCurrentUserClient(page = 0, count = 10) {
   return request({
     method: 'get',
-    url: `${API}/client/${page}/ß${count}`
+    url: `${API}/client/${page}/${count}`
   })
 }
 

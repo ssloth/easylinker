@@ -50,7 +50,6 @@
             <item
               v-if="child.meta"
               :icon="child.meta.icon"
-              :title="child.meta.title"
             />
           </el-menu-item>
         </app-link>
