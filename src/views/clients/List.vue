@@ -1,12 +1,38 @@
 <template>
   <div class="clients">
+    <el-tabs
+      v-model="activeTab"
+      type="card"
+      @tab-click="handleTabChange"
+    >
+      <el-tab-pane
+        label="MQTT"
+        name="MQTT"
+      />
+      <el-tab-pane
+        label="COAP"
+        name="COAP"
+      />
+      <el-tab-pane
+        label="HTTP"
+        name="HTTP"
+      />
+      <el-tab-pane
+        label="TCP"
+        name="TCP"
+      />
+      <el-tab-pane
+        label="UDP"
+        name="UDP"
+      />
+    </el-tabs>
     <el-table
       :data="tableData"
       style="width: 100%"
     >
       <el-table-column
         label="状态"
-        width="80"
+        width="60"
       >
         <template slot-scope="scope">
           <div
@@ -88,6 +114,7 @@
 import { getCurrentUserClient, deleteClient } from '@/api/client'
 import Create from './Create'
 const defaultQuery = {
+  type: 'mqtt',
   page: 1,
   count: 10
 }
@@ -101,6 +128,7 @@ export default {
   data() {
     return {
       query: Object.assign({}, defaultQuery),
+      activeTab: 'MQTT',
       totalElements: 0,
       tableData: [],
       createDialogdShow: false,
@@ -125,6 +153,10 @@ export default {
         type: 'warning'
       }).then(() => {
         deleteClient(row.id).then(res => {
+          if (res.data.sate !== 1) {
+            this.$message.error(res.data.message)
+          }
+          this._getList()
           this.$message({
             type: 'success',
             message: '删除成功!'
@@ -145,12 +177,19 @@ export default {
       this.query.page = page
       this._getList()
     },
-    onCreateColse() {
+    handleTabChange() {
+      this.query.type = this.activeName
+      this._getList()
+    },
+    onCreateColse(value) {
+      if (value) {
+        this._getList()
+      }
       this.createDialogdShow = false
     },
     _getList() {
-      const { page, count } = this.query
-      getCurrentUserClient(page - 1, count).then(res => {
+      const { type, page, count } = this.query
+      getCurrentUserClient(type, page - 1, count).then(res => {
         const data = res.data
         if (res.data.state === 1) {
           this.tableData = data.data.content

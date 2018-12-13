@@ -4,6 +4,7 @@
       v-for="(logItem,key) in logList"
       :key="key"
       :date="logItem.date"
+      :device-id="logItem.deviceId"
       :event="logItem.event"
     />
   </div>

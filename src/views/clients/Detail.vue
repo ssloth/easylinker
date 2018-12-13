@@ -47,7 +47,7 @@
           >
             <el-table-column
               label="时间"
-              width="110"
+              width="160"
               prop="createTime"
             >
               <template slot-scope="scope">
@@ -164,7 +164,7 @@ export default {
     handleView(row) {
 
     },
-    handleCurrentChange(page){
+    handleCurrentChange(page) {
       this.query.page = page
       console.log('1')
       this._getData()
@@ -179,7 +179,7 @@ export default {
           this.detail.push(['设备Id', ret.id])
           this.detail.push(['名称', ret.name])
           this.detail.push(['描述', ret.info])
-          this.detail.push(['数据量', ret.id])
+          this.detail.push(['类型', ret.type])
         }
       }).catch(e => console.log(e))
     },
@@ -190,6 +190,7 @@ export default {
         const { content, totalElements } = res.data.data
         this.tableData = content
         this.totalElements = totalElements
+        this.detail[4] = ['数据量', totalElements]
       })
     }
   }
