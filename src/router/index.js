@@ -20,7 +20,7 @@ export const constantRouterMap = [
         path: 'home',
         component: () => import('@/views/home'),
         name: 'home',
-        meta: { title: '系统首页', icon: 'dashboard', noCache: true }
+        meta: { title: '系统首页', icon: 'menu', noCache: true }
       }
     ]
   },
@@ -33,7 +33,7 @@ export const constantRouterMap = [
         path: '',
         component: () => import('@/views/clients/List'),
         name: 'table',
-        meta: { title: '设备列表', icon: 'table', noCache: true }
+        meta: { title: '设备列表', icon: 'tickets', noCache: true }
       },
       {
         path: 'detail',

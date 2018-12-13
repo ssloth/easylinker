@@ -68,8 +68,8 @@ export default {
     }
     return {
       loginForm: {
-        loginParam: 'zhaoleilei',
-        password: 'zhaoleilei'
+        loginParam: 'wangwenhai',
+        password: 'wangwenhai'
       },
       loginRules: {
         loginParam: [{ required: true, trigger: 'blur', validator: validateloginParam }],

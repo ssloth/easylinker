@@ -47,11 +47,11 @@
           >
             <el-table-column
               label="时间"
-              width="100"
+              width="110"
               prop="createTime"
             >
               <template slot-scope="scope">
-                <span>{{ scope.row.date | filtersDate }}</span>
+                <span>{{ scope.row.createTime | filtersDate }}</span>
               </template>
             </el-table-column>
             <el-table-column
@@ -100,6 +100,7 @@
             background
             layout="prev, pager, next"
             :total="totalElements"
+            @current-change="handleCurrentChange"
           />
         </el-card>
       </el-col>
@@ -109,9 +110,10 @@
 
 <script>
 import { getClientInfo, getClientData } from '@/api/client'
+import { parseTime } from '@/utils'
 import Clipboard from 'clipboard'
 const defaultQuery = {
-  page: 0,
+  page: 1,
   count: 10
 }
 export default {
@@ -120,7 +122,7 @@ export default {
       return JSON.stringify(value)
     },
     filtersDate(value) {
-      return new Date(value)
+      return parseTime(new Date(value))
     }
   },
   data() {
@@ -162,6 +164,11 @@ export default {
     handleView(row) {
 
     },
+    handleCurrentChange(page){
+      this.query.page = page
+      console.log('1')
+      this._getData()
+    },
     _getDetail() {
       const id = this.$route.query.id
       getClientInfo(id).then(res => {
@@ -179,7 +186,7 @@ export default {
     _getData() {
       const id = this.$route.query.id
       const { page, count } = this.query
-      getClientData(id, page, count).then(res => {
+      getClientData(id, page - 1, count).then(res => {
         const { content, totalElements } = res.data.data
         this.tableData = content
         this.totalElements = totalElements

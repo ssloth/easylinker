@@ -15,7 +15,7 @@ export function getClientInfo(id) {
 /**
  * 获取用户的设备列表
  */
-export function getCurrentUserClient(page = 0, count = 10) {
+export function getCurrentUserClient(page = 1, count = 10) {
   return request({
     method: 'get',
     url: `${API}/client/${page}/${count}`
@@ -26,15 +26,16 @@ export function getCurrentUserClient(page = 0, count = 10) {
  * 创建设备
  * @param {*} name
  * @param {*} info
- * @param {*} topic
- * @param {*} alcs
+ * @param {*} acls
  * @param {*} group
+ * @param {*} type
+ * @param {*} topic
  */
-export function createClient(name, info, topic, alcs, group) {
-  const data = { name, info, topic, alcs, group }
+export function createClient(name, info, aclEntries, group, type, topic = 'x') {
+  const data = { name, info, aclEntries, group, type, topic }
   return request({
     method: 'post',
-    url: `${API}/client`,
+    url: `${API}/client/`,
     data
   })
 }
@@ -43,7 +44,7 @@ export function createClient(name, info, topic, alcs, group) {
  * 获取设备数据
  * @param {*} id
  */
-export function getClientData(id, page = 0, count = 10) {
+export function getClientData(id, page = 1, count = 10) {
   return request({
     method: 'get',
     url: `${API}/client/data/${id}/${page}/${count}`
@@ -57,7 +58,7 @@ export function getClientData(id, page = 0, count = 10) {
 export function deleteClient(id) {
   return request({
     method: 'delete',
-    url: `${API}/client/${id}`
+    url: `${API}/client/${id}/`
   })
 }
 
@@ -74,7 +75,7 @@ export function upload(id, name, info, topic, alc, group) {
   const data = { id, name, info, topic, alc, group }
   return request({
     method: 'put',
-    url: `${API}/client`,
+    url: `${API}/client/`,
     data
   })
 }

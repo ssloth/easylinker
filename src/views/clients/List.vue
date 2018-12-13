@@ -9,29 +9,22 @@
         width="80"
       >
         <template slot-scope="scope">
-          <el-popover
-            trigger="hover"
-            placement="top"
+          <div
+            slot="reference"
+            class="name-wrapper"
           >
-            <p>{{ scope.row.onLine | filterOnline }}</p>
-            <div
-              slot="reference"
-              class="name-wrapper"
-            >
-              <el-tag
-                :type="scope.row.onLine ? 'success':'error'"
-                size="medium"
-              >{{ scope.row.onLine | filterOnline }}</el-tag>
-            </div>
-          </el-popover>
+            <el-tag
+              :type="scope.row.onLine ? 'success':'error'"
+              size="medium"
+            >{{ scope.row.onLine | filterOnline }}</el-tag>
+          </div>
         </template>
       </el-table-column>
       <el-table-column
         label="设备id"
-        width="300"
+        width="320"
       >
         <template slot-scope="scope">
-          <i class="el-icon-time" />
           <span style="margin-left: 10px">{{ scope.row.clientId }}</span>
         </template>
       </el-table-column>
@@ -74,6 +67,7 @@
         background
         layout="prev, pager, next"
         :total="totalElements"
+        @current-change="handleCurrentChange"
       />
       <el-button
         style="margin:3px"
@@ -94,7 +88,7 @@
 import { getCurrentUserClient, deleteClient } from '@/api/client'
 import Create from './Create'
 const defaultQuery = {
-  page: 0,
+  page: 1,
   count: 10
 }
 export default {
@@ -147,12 +141,16 @@ export default {
       this.editData = {}
       this.createDialogdShow = true
     },
+    handleCurrentChange(page) {
+      this.query.page = page
+      this._getList()
+    },
     onCreateColse() {
       this.createDialogdShow = false
     },
     _getList() {
       const { page, count } = this.query
-      getCurrentUserClient(page, count).then(res => {
+      getCurrentUserClient(page - 1, count).then(res => {
         const data = res.data
         if (res.data.state === 1) {
           this.tableData = data.data.content
