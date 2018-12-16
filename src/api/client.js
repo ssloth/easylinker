@@ -44,10 +44,10 @@ export function createClient(name, info, aclEntries, group, type, topic = 'x') {
  * 获取设备数据
  * @param {*} id
  */
-export function getClientData(id, page = 1, count = 10) {
+export function getClientData(type, id, page = 1, count = 10) {
   return request({
     method: 'get',
-    url: `${API}/client/data/${id}/${page}/${count}`
+    url: `${API}/client/data/${type}/${id}/${page}/${count}`
   })
 }
 

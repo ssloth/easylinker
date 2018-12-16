@@ -13,7 +13,7 @@
             <el-progress
               :width="100"
               type="circle"
-              :percentage="80"
+              :percentage="cpu"
               color="#8e71c7"
             />
             <div class="label">CPU</div>
@@ -24,7 +24,7 @@
             <el-progress
               :width="100"
               type="circle"
-              :percentage="10"
+              :percentage="mem"
               color="#71c7c7"
             />
             <div class="label">MEM</div>
@@ -35,10 +35,10 @@
             <el-progress
               :width="100"
               type="circle"
-              :percentage="50"
+              :percentage="ram"
               color="#c77171"
             />
-            <div class="label">NET</div>
+            <div class="label">RAM</div>
           </div>
         </el-col>
       </el-row>
@@ -63,6 +63,19 @@
 
 <script>
 export default {
-
+  props: {
+    mem: {
+      type: Number,
+      default: 0
+    },
+    ram: {
+      type: Number,
+      default: 0
+    },
+    cpu: {
+      type: Number,
+      default: 0
+    }
+  }
 }
 </script>

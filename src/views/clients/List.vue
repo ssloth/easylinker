@@ -1,7 +1,8 @@
 <template>
   <div class="clients">
     <el-tabs
-      v-model="activeTab"
+      v-model="activeName"
+      v-loading="loading"
       type="card"
       @tab-click="handleTabChange"
     >
@@ -114,7 +115,7 @@
 import { getCurrentUserClient, deleteClient } from '@/api/client'
 import Create from './Create'
 const defaultQuery = {
-  type: 'mqtt',
+  type: 'MQTT',
   page: 1,
   count: 10
 }
@@ -123,16 +124,17 @@ export default {
     Create
   },
   filters: {
-    filterOnline: v => v ? '在线' : '离线'
+    filterOnline: v => (v ? '在线' : '离线')
   },
   data() {
     return {
       query: Object.assign({}, defaultQuery),
-      activeTab: 'MQTT',
+      activeName: 'MQTT',
       totalElements: 0,
       tableData: [],
       createDialogdShow: false,
-      editData: {}
+      editData: {},
+      loading: false
     }
   },
   created() {
@@ -144,30 +146,33 @@ export default {
       this.editData = Object.assign({}, row)
     },
     handleDetail(index, row) {
-      this.$router.push(`/client/detail?id=${row.id}`)
+      console.log(row)
+      this.$router.push(`/client/detail?id=${row.id}&type=${this.activeName}`)
     },
     handleDelete(index, row) {
       this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(() => {
-        deleteClient(row.id).then(res => {
-          if (res.data.sate !== 1) {
-            this.$message.error(res.data.message)
-          }
-          this._getList()
-          this.$message({
-            type: 'success',
-            message: '删除成功!'
+      })
+        .then(() => {
+          deleteClient(row.id).then(res => {
+            if (res.data.sate !== 1) {
+              this.$message.error(res.data.message)
+            }
+            this._getList()
+            this.$message({
+              type: 'success',
+              message: '删除成功!'
+            })
           })
         })
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '已取消删除'
+        .catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
         })
-      })
     },
     handleCreate() {
       this.editData = {}
@@ -189,13 +194,17 @@ export default {
     },
     _getList() {
       const { type, page, count } = this.query
-      getCurrentUserClient(type, page - 1, count).then(res => {
-        const data = res.data
-        if (res.data.state === 1) {
-          this.tableData = data.data.content
-          this.totalElements = data.data.totalElements
-        }
-      }).catch(e => console.log(e))
+      this.loading = true
+      getCurrentUserClient(type, page - 1, count)
+        .then(res => {
+          this.loading = false
+          const data = res.data
+          if (res.data.state === 1) {
+            this.tableData = data.data.content
+            this.totalElements = data.data.totalElements
+          }
+        })
+        .catch(e => console.log(e))
     }
   }
 }

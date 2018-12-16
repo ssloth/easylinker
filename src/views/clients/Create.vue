@@ -125,7 +125,7 @@ export default {
   methods: {
     handleSubmit() {
       const { id } = this.form
-      if (id) {
+      if (!id) {
         this._createClient()
       } else {
         this._uploadClient()

@@ -41,13 +41,14 @@
           shadow="never"
         >
           <el-table
+            v-loading="loading"
             :data="tableData"
             style="width: 100%"
             :max-height="tableHeight"
           >
             <el-table-column
               label="时间"
-              width="160"
+              width="180"
               prop="createTime"
             >
               <template slot-scope="scope">
@@ -58,6 +59,7 @@
               label="信息"
               width="100"
               prop="info"
+              show-overflow-tooltip
             />
             <el-table-column
               label="数据"
@@ -130,6 +132,7 @@ export default {
       id: null,
       detail: [],
       tableData: [],
+      loading: false,
       query: Object.assign({}, defaultQuery),
       totalElements: 0
     }
@@ -161,9 +164,7 @@ export default {
         clipboard.destroy()
       })
     },
-    handleView(row) {
-
-    },
+    handleView(row) {},
     handleCurrentChange(page) {
       this.query.page = page
       console.log('1')
@@ -171,23 +172,30 @@ export default {
     },
     _getDetail() {
       const id = this.$route.query.id
-      getClientInfo(id).then(res => {
-        const data = res.data
-        this.detail = []
-        if (res.data.state === 1) {
-          const ret = data.data
-          this.detail.push(['设备Id', ret.id])
-          this.detail.push(['名称', ret.name])
-          this.detail.push(['描述', ret.info])
-          this.detail.push(['类型', ret.type])
-        }
-      }).catch(e => console.log(e))
+      const type = this.$route.query.type
+
+      getClientInfo(type, id)
+        .then(res => {
+          const data = res.data
+          this.detail = []
+          if (res.data.state === 1) {
+            const ret = data.data
+            this.detail.push(['设备Id', ret.id])
+            this.detail.push(['名称', ret.name])
+            this.detail.push(['描述', ret.info])
+            this.detail.push(['类型', ret.type])
+          }
+        })
+        .catch(e => console.log(e))
     },
     _getData() {
+      const type = this.$route.query.type
       const id = this.$route.query.id
       const { page, count } = this.query
-      getClientData(id, page - 1, count).then(res => {
+      this.loading = true
+      getClientData(type, id, page - 1, count).then(res => {
         const { content, totalElements } = res.data.data
+        this.loading = false
         this.tableData = content
         this.totalElements = totalElements
         this.detail[4] = ['数据量', totalElements]

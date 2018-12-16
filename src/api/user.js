@@ -1,5 +1,6 @@
 import request from '@/utils/request'
-
+import { API_VERSION } from '../config/index'
+const { API } = API_VERSION
 /**
  * 登陆
  * @param {*} loginParam
@@ -43,7 +44,7 @@ export function register(username, password, passwordRetry, emailmphone) {
 export function update(username, password, passwordRetry, emailmphone) {
   const data = { username, password, passwordRetry, emailmphone }
   return request({
-    url: '/user',
+    url: `${API}/user`,
     method: 'put',
     data
   })
@@ -58,7 +59,7 @@ export function update(username, password, passwordRetry, emailmphone) {
 export function resetPassword(password, passwordRetry, oldPassword) {
   const data = { password, passwordRetry, oldPassword }
   return request({
-    url: '/user/resetPassword',
+    url: `${API}/user/resetPassword`,
     method: 'put',
     data
   })
@@ -80,7 +81,7 @@ export function logout() {
  */
 export function getUserInfo() {
   return request({
-    url: '/api/user',
+    url: `${API}/user`,
     method: 'get'
   })
 }
@@ -96,5 +97,35 @@ export function active(phone, code) {
     url: '/user/active/',
     method: 'post',
     data
+  })
+}
+
+/**
+ * 获取设备数目概览信息
+ */
+export function getDeviceOverViewInfo() {
+  return request({
+    url: `${API}/user/deviceOverViewInfo`,
+    method: 'get'
+  })
+}
+
+/**
+ * 获取系统信息
+ */
+export function getServerInfo() {
+  return request({
+    url: `${API}/user/serverInfo`,
+    method: 'get'
+  })
+}
+
+/**
+ * 获取系统信息
+ */
+export function getLogs(page = 1, count = 10) {
+  return request({
+    url: `${API}/user/getLog/${page}/${count}`,
+    method: 'get'
   })
 }

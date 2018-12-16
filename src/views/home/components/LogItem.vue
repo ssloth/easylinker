@@ -1,12 +1,15 @@
 <template>
   <div class="log-item">
-    <div class="date">{{ date }}</div>
-    <span :class="status" class="log-text">
+    <span
+      :class="status"
+      class="log-text"
+    >
       [
       <span>{{ event }}</span>
       ]
     </span>
-    <span class="device-id">{{ deviceId }}</span>
+    <span class="date">{{ date }}</span>
+    <div class="info">{{ info }}</div>
   </div>
 </template>
 
@@ -14,10 +17,10 @@
 export default {
   name: 'LogItem',
   // eslint-disable-next-line
-  props: ['date', 'deviceId', 'event'],
+  props: ['date', 'info', 'event'],
   computed: {
     status() {
-      return this.event === 'DISCONNECT' ? 'disconnent' : 'connect'
+      return this.event === '设备下线' ? 'disconnent' : 'connect'
     }
   }
 }
@@ -25,13 +28,13 @@ export default {
 
 <style lang="scss" scoped>
 .log-item {
-  margin-bottom: 10px;
   .date {
     font-size: 0.9em;
     color: #999999;
   }
-  .device-id {
-    color: #255555;
+  .info{
+    font-size: 0.8em;
+    color: #344454;
   }
   .log-text {
     font-size: 0.96em;
@@ -39,7 +42,7 @@ export default {
 
     span {
       display: inline-block;
-      width: 88px;
+      width: 50px;
       text-align: center;
       font-size: 0.88em;
     }
