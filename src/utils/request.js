@@ -5,8 +5,10 @@ import { getToken } from '@/utils/auth'
 import { STATE_CODE } from '@/config'
 const { TOKEN_EXPIRED } = STATE_CODE
 // create an axios instance
+console.log(process.env)
 const service = axios.create({
-  baseURL: process.env.BASE_API, // api 的 base_url
+  baseURL: '/api', // api 的 base_url
+  // baseURL: process.env.BASE_URL, // api 的 base_url
   timeout: 5000 // request timeout
 })
 

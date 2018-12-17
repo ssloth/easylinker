@@ -44,9 +44,6 @@
         style="width:100%;margin-bottom:30px;"
         @click.native.prevent="handleLogin"
       >登录</el-button>
-      <div class="register">
-        <a href="/register">注册</a>
-      </div>
       <!-- <el-button class="thirdparty-button" type="primary" @click="showDialog=true"></el-button> -->
     </el-form>
   </div>

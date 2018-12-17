@@ -35,6 +35,7 @@
     </div> -->
     <div class="right-menu">
       <el-button
+        style="margin-right:25px"
         type="small"
         @click="logout"
       > 注销 </el-button>
