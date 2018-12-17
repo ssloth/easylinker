@@ -1,5 +1,4 @@
 build/
 config/
 src/assets
-src/views/layout
 *.config.js

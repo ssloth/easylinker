@@ -167,7 +167,6 @@ export default {
     handleView(row) {},
     handleCurrentChange(page) {
       this.query.page = page
-      console.log('1')
       this._getData()
     },
     _getDetail() {

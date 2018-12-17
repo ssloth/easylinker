@@ -1,23 +1,23 @@
 <template>
-  <div class="login-container">
+  <div class="register-container">
     <el-form
-      ref="loginForm"
-      :model="loginForm"
-      :rules="loginRules"
-      class="login-form"
+      ref="registerForm"
+      :model="registerForm"
+      :rules="registerRules"
+      class="register-form"
       autocomplete="on"
       label-position="left"
     >
       <div class="title-container">
-        <h3 class="title">EasyLinker</h3>
+        <h3 class="title">注册</h3>
       </div>
-      <el-form-item prop="loginParam">
+      <el-form-item prop="registerParam">
         <span class="svg-container">
           <svg-icon icon-class="user" />
         </span>
         <el-input
-          v-model="loginForm.loginParam"
-          name="loginParam"
+          v-model="registerForm.registerParam"
+          name="registerParam"
           type="text"
         />
       </el-form-item>
@@ -26,10 +26,10 @@
           <svg-icon icon-class="password" />
         </span>
         <el-input
-          v-model="loginForm.password"
+          v-model="registerForm.password"
           :type="passwordType"
           name="password"
-          @keyup.enter.native="handleLogin"
+          @keyup.enter.native="handleregister"
         />
         <span
           class="show-pwd"
@@ -42,11 +42,9 @@
         :loading="loading"
         type="primary"
         style="width:100%;margin-bottom:30px;"
-        @click.native.prevent="handleLogin"
+        @click.native.prevent="handleregister"
       >登录</el-button>
-      <div class="register">
-        <a href="/register">注册</a>
-      </div>
+
       <!-- <el-button class="thirdparty-button" type="primary" @click="showDialog=true"></el-button> -->
     </el-form>
   </div>
@@ -55,13 +53,10 @@
 <script>
 import { isvalidloginParam } from '@/utils/validate'
 import { Message } from 'element-ui'
-// import SocialSign from './socialsignin'
 
 export default {
-  name: 'Login',
-  // components: { SocialSign },
   data() {
-    const validateloginParam = (rule, value, callback) => {
+    const validateLogintParam = (rule, value, callback) => {
       if (!isvalidloginParam(value)) {
         callback(new Error('Please enter the correct user name'))
       } else {
@@ -76,13 +71,13 @@ export default {
       }
     }
     return {
-      loginForm: {
-        loginParam: 'wangwenhai',
+      registerForm: {
+        registerParam: 'wangwenhai',
         password: 'wangwenhai'
       },
-      loginRules: {
-        loginParam: [
-          { required: true, trigger: 'blur', validator: validateloginParam }
+      registerRules: {
+        registerParam: [
+          { required: true, trigger: 'blur', validator: validateLogintParam }
         ],
         password: [
           { required: true, trigger: 'blur', validator: validatePassword }
@@ -116,12 +111,12 @@ export default {
         this.passwordType = 'password'
       }
     },
-    handleLogin() {
-      this.$refs.loginForm.validate(valid => {
+    handleregister() {
+      this.$refs.registerForm.validate(valid => {
         if (valid) {
           this.loading = true
           this.$store
-            .dispatch('LoginByloginParam', this.loginForm)
+            .dispatch('registerByregisterParam', this.registerForm)
             .then(response => {
               this.loading = false
               const data = response.data
@@ -156,7 +151,7 @@ export default {
       // if (!codeName) {
       //   alert('第三方登录失败')
       // } else {
-      //   this.$store.dispatch('LoginByThirdparty', codeName).then(() => {
+      //   this.$store.dispatch('registerByThirdparty', codeName).then(() => {
       //     this.$router.push({ path: '/' })
       //   })
       // }
@@ -174,7 +169,7 @@ $light_gray: #eee;
 $cursor: #fff;
 
 @supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
-  .login-container .el-input input {
+  .register-container .el-input input {
     color: $cursor;
     &::first-line {
       color: $light_gray;
@@ -183,7 +178,7 @@ $cursor: #fff;
 }
 
 /* reset element-ui css */
-.login-container {
+.register-container {
   .el-input {
     display: inline-block;
     height: 47px;
@@ -209,11 +204,6 @@ $cursor: #fff;
     border-radius: 5px;
     color: #454545;
   }
-  .register {
-    font-size: 0.9em;
-    color: #dddddd;
-    text-align: right;
-  }
 }
 </style>
 
@@ -222,12 +212,12 @@ $bg: #2d3a4b;
 $dark_gray: #889aa4;
 $light_gray: #eee;
 
-.login-container {
+.register-container {
   position: fixed;
   height: 100%;
   width: 100%;
   background-color: $bg;
-  .login-form {
+  .register-form {
     position: absolute;
     left: 0;
     right: 0;
