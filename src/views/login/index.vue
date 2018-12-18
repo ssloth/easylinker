@@ -32,12 +32,15 @@
         </span>
       </el-form-item>
       <el-button
+        round
         :loading="loading"
         type="primary"
         style="width:100%;margin-bottom:30px;"
         @click.native.prevent="handleLogin"
-      >登录</el-button>
-
+      >
+        登 录
+        <i class="el-icon-arrow-right" />
+      </el-button>
       <!-- <el-button class="thirdparty-button" type="primary" @click="showDialog=true"></el-button> -->
     </el-form>
   </div>
@@ -72,8 +75,12 @@ export default {
         password: 'wangwenhai'
       },
       loginRules: {
-        loginParam: [{ required: true, trigger: 'blur', validator: validateloginParam }],
-        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
+        loginParam: [
+          { required: true, trigger: 'blur', validator: validateloginParam }
+        ],
+        password: [
+          { required: true, trigger: 'blur', validator: validatePassword }
+        ]
       },
       passwordType: 'password',
       loading: false,
@@ -88,7 +95,6 @@ export default {
       },
       immediate: true
     }
-
   },
   created() {
     // window.addEventListener('hashchange', this.afterQRScan)
@@ -108,20 +114,23 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          this.$store.dispatch('LoginByloginParam', this.loginForm).then(response => {
-            this.loading = false
-            const data = response.data
-            console.log(data.state)
-            if (data.state === 1) {
+          this.$store
+            .dispatch('LoginByloginParam', this.loginForm)
+            .then(response => {
               this.loading = false
-              this.$router.push({ path: this.redirect || '/' })
-            } else {
-              Message.error('用戶名或密码错误')
-              return false
-            }
-          }).catch(() => {
-            this.loading = false
-          })
+              const data = response.data
+              console.log(data.state)
+              if (data.state === 1) {
+                this.loading = false
+                this.$router.push({ path: this.redirect || '/' })
+              } else {
+                Message.error('用戶名或密码错误')
+                return false
+              }
+            })
+            .catch(() => {
+              this.loading = false
+            })
         } else {
           console.log('error submit!!')
           return false
@@ -169,7 +178,10 @@ $cursor: #fff;
 
 /* reset element-ui css */
 .login-container {
+  background: url(../../assets/images/login-bg.jpeg);
+  background-size: cover;
   .el-input {
+    font-size: 24px;
     display: inline-block;
     height: 47px;
     width: 85%;
@@ -177,7 +189,7 @@ $cursor: #fff;
       background: transparent;
       border: 0px;
       -webkit-appearance: none;
-      border-radius: 0px;
+      border-radius: 47px;
       padding: 12px 5px 12px 15px;
       color: $light_gray;
       height: 47px;
@@ -189,10 +201,10 @@ $cursor: #fff;
     }
   }
   .el-form-item {
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-    color: #454545;
+    border: 1px solid #ccc;
+    // background: rgba(0, 0, 0, 0.1);
+    border-radius: 47px;
+    color: #222;
   }
 }
 </style>
@@ -208,13 +220,23 @@ $light_gray: #eee;
   width: 100%;
   background-color: $bg;
   .login-form {
+    .el-button{
+      background: #409EFF;
+      border-color: #409EFF;
+      height: 54px;
+      border-radius: 54px;
+      font-size: 16px
+    }
     position: absolute;
     left: 0;
     right: 0;
-    width: 520px;
+    width: 450px;
     max-width: 100%;
-    padding: 35px 35px 15px 35px;
-    margin: 120px auto;
+    padding: 35px 50px 15px 50px;
+    margin: 12% auto;
+    background: #fff;
+    opacity: 0.95;
+    border-radius: 10px;
   }
   .tips {
     font-size: 14px;
@@ -237,10 +259,11 @@ $light_gray: #eee;
     position: relative;
     .title {
       font-size: 26px;
-      color: $light_gray;
+      color: #333;
       margin: 0px auto 40px auto;
       text-align: center;
       font-weight: bold;
+      letter-spacing: 5px;
     }
     .set-language {
       color: #fff;
