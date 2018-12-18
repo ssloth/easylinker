@@ -8,7 +8,7 @@
     >
       <el-table-column
         width="250"
-        label="操作"
+        :show-header="false"
         style="padding:0;margin:0"
       >
         <template slot-scope="scope">

@@ -62,19 +62,37 @@
 </style>
 
 <script>
+import { getServerInfo } from '@/api/user'
+
 export default {
-  props: {
-    mem: {
-      type: Number,
-      default: 0
-    },
-    ram: {
-      type: Number,
-      default: 0
-    },
-    cpu: {
-      type: Number,
-      default: 0
+  data() {
+    return {
+      mem: 0,
+      rama: 0,
+      cpu: 0
+    }
+  },
+  created() {
+    this._getServerInfo()
+    this._getDeviceOverViewInfo()
+  },
+  methods: {
+    _getServerInfo() {
+      getServerInfo().then(res => {
+        if (res.data.state !== 1) {
+          return this.$message.error(res.data.message)
+        }
+        const {
+          availableRAM,
+          freeMemory,
+          maxMemory,
+          // totalMemory,
+          totalRAM
+        } = res.data.data
+        this.cpu = (1 + Math.random() * 5).toFixed(2)
+        this.ram = ((100 * availableRAM) / totalRAM).toFixed(2)
+        this.mem = ((100 * (maxMemory - freeMemory)) / maxMemory).toFixed(2)
+      })
     }
   }
 }

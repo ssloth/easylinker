@@ -41,10 +41,10 @@
       </el-table-column>
       <el-table-column
         label="设备id"
-        width="320"
+        width="150"
       >
         <template slot-scope="scope">
-          <span style="margin-left: 10px">{{ scope.row.clientId }}</span>
+          <span style="margin-left: 10px">{{ scope.row.id }}</span>
         </template>
       </el-table-column>
       <el-table-column
