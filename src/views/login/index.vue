@@ -15,7 +15,11 @@
         <span class="svg-container">
           <svg-icon icon-class="user" />
         </span>
-        <el-input v-model="loginForm.loginParam" name="loginParam" type="text" />
+        <el-input
+          v-model="loginForm.loginParam"
+          name="loginParam"
+          type="text"
+        />
       </el-form-item>
       <el-form-item prop="password">
         <span class="svg-container">
@@ -27,7 +31,10 @@
           name="password"
           @keyup.enter.native="handleLogin"
         />
-        <span class="show-pwd" @click="showPwd">
+        <span
+          class="show-pwd"
+          @click="showPwd"
+        >
           <svg-icon icon-class="eye" />
         </span>
       </el-form-item>
@@ -205,6 +212,11 @@ $cursor: #fff;
     // background: rgba(0, 0, 0, 0.1);
     border-radius: 47px;
     color: #222;
+  }
+  .register {
+    font-size: 0.9em;
+    color: #dddddd;
+    text-align: right;
   }
 }
 </style>

@@ -1,6 +1,10 @@
 <template>
   <div class="navbar">
-    <hamburger :toggle-click="toggleSideBar" :is-active="sidebar.opened" class="hamburger-container"/>
+    <hamburger
+      :toggle-click="toggleSideBar"
+      :is-active="sidebar.opened"
+      class="hamburger-container"
+    />
 
     <!-- <breadcrumb class="breadcrumb-container"/> -->
 
@@ -29,6 +33,13 @@
         </el-dropdown-menu>
       </el-dropdown>
     </div> -->
+    <div class="right-menu">
+      <el-button
+        style="margin-right:25px"
+        type="small"
+        @click="logout"
+      > 注销 </el-button>
+    </div>
   </div>
 </template>
 
@@ -42,15 +53,11 @@ import Hamburger from '@/components/Hamburger'
 export default {
   components: {
     // Breadcrumb,
-    Hamburger,
+    Hamburger
     // Screenfull
   },
   computed: {
-    ...mapGetters([
-      'sidebar',
-      'name',
-      'device'
-    ])
+    ...mapGetters(['sidebar', 'name', 'device'])
   },
   methods: {
     handleRefresh() {
@@ -72,8 +79,8 @@ export default {
       this.$store.dispatch('toggleSideBar')
     },
     logout() {
-      this.$store.dispatch('LogOut').then(() => {
-        location.reload()// In order to re-instantiate the vue-router object to avoid bugs
+      this.$store.dispatch('FedLogOut').then(() => {
+        location.reload() // In order to re-instantiate the vue-router object to avoid bugs
       })
     }
   }
@@ -91,7 +98,7 @@ export default {
     float: left;
     padding: 0 10px;
   }
-  .breadcrumb-container{
+  .breadcrumb-container {
     float: left;
   }
   .errLog-container {
@@ -101,14 +108,14 @@ export default {
   .right-menu {
     float: right;
     height: 100%;
-    &:focus{
-     outline: none;
+    &:focus {
+      outline: none;
     }
     .right-menu-item {
       display: inline-block;
       margin: 0 8px;
     }
-    .clear-btn{
+    .clear-btn {
       margin-right: 10px;
       position: relative;
       top: -13px;
@@ -116,7 +123,7 @@ export default {
     .screenfull {
       height: 20px;
     }
-    .international{
+    .international {
       vertical-align: top;
     }
     .theme-switch {

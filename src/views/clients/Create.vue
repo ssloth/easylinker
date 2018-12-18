@@ -119,7 +119,7 @@ export default {
   },
   created() {
     this.options = [
-      'MQTT', 'HTTP', 'COAP', 'UDP', 'TCP'
+      'MQTT', 'HTTP', 'COAP'
     ]
   },
   methods: {

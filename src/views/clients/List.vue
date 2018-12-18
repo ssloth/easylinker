@@ -18,14 +18,6 @@
         label="HTTP"
         name="HTTP"
       />
-      <el-tab-pane
-        label="TCP"
-        name="TCP"
-      />
-      <el-tab-pane
-        label="UDP"
-        name="UDP"
-      />
     </el-tabs>
     <el-table
       :data="tableData"
