@@ -44,15 +44,15 @@ export const constantRouterMap = [
     ]
   },
   {
-    path: '/setting',
+    path: '/user',
     component: Layout,
-    redirect: 'setting',
+    redirect: 'user',
     children: [
       {
         path: '',
-        component: () => import('@/views/setting'),
-        name: 'setting',
-        meta: { title: '系统配置', icon: 'setting', noCache: true }
+        component: () => import('@/views/user'),
+        name: 'user',
+        meta: { title: '个人信息', icon: 'setting', noCache: true }
       }
     ]
   }

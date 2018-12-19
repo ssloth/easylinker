@@ -68,13 +68,12 @@ export default {
   data() {
     return {
       mem: 0,
-      rama: 0,
+      ram: 0,
       cpu: 0
     }
   },
   created() {
     this._getServerInfo()
-    this._getDeviceOverViewInfo()
   },
   methods: {
     _getServerInfo() {
@@ -86,12 +85,13 @@ export default {
           availableRAM,
           freeMemory,
           maxMemory,
-          // totalMemory,
           totalRAM
         } = res.data.data
-        this.cpu = (1 + Math.random() * 5).toFixed(2)
-        this.ram = ((100 * availableRAM) / totalRAM).toFixed(2)
-        this.mem = ((100 * (maxMemory - freeMemory)) / maxMemory).toFixed(2)
+        this.cpu = Number((1 + Math.random() * 5).toFixed(2))
+        this.ram = Number(((100 * availableRAM) / totalRAM).toFixed(2))
+        this.mem = Number(
+          ((100 * (maxMemory - freeMemory)) / maxMemory).toFixed(2)
+        )
       })
     }
   }

@@ -15,8 +15,8 @@
       </el-col>
       <el-col :span="7">
         <card-item
-          :number="soap"
-          :text="'soap'"
+          :number="coap"
+          :text="'coap'"
         />
       </el-col>
       <el-col :span="10">
@@ -27,7 +27,7 @@
         />
         <card-item
           :direction="'level'"
-          :number="mqttOnline"
+          :number="mqttnOnline"
           :text="'MQTT在线'"
         />
       </el-col>
@@ -46,7 +46,7 @@ export default {
   data() {
     return {
       mqttTotal: 0,
-      mqttnline: 0,
+      mqttnOnline: 0,
       http: 0,
       coap: 0
     }

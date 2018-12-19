@@ -2,7 +2,10 @@
   <div class="home">
     <div class="console">
       <ui-split-bar title="综述" />
-      <el-row :gutter="24">
+      <el-row
+        class="row"
+        :gutter="12"
+      >
         <el-col
           :lg="12"
           :md="24"
@@ -13,11 +16,15 @@
           :lg="12"
           :md="24"
         >
-          <server-status
-            :cpu="system.cpu"
-            :ram="system.ram"
-            :mem="system.mem"
-          />
+          <server-status />
+        </el-col>
+      </el-row>
+      <el-row
+        class="row"
+        :gutter="12"
+      >
+        <el-col :lg="24">
+          <dashboard />
         </el-col>
       </el-row>
     </div>
@@ -27,7 +34,7 @@
         body-style="padding:10px"
         shadow="never"
       >
-        <log-list :data="'data'" />
+        <log-list />
       </el-card>
     </div>
   </div>
@@ -38,12 +45,14 @@ import UiSplitBar from '@/components/UI/Split/SplitBar'
 import LogList from './components/LogList'
 import ServerStatus from './components/ServerStatus'
 import ClientCount from './components/ClientCount'
+import Dashboard from './components/Dashboard'
 export default {
   components: {
     UiSplitBar,
     ClientCount,
     LogList,
-    ServerStatus
+    ServerStatus,
+    Dashboard
   }
 }
 </script>
@@ -52,6 +61,9 @@ export default {
 .home {
   display: flex;
   .console {
+    .row {
+      margin-bottom: 12px;
+    }
     flex: 1;
     margin: 0 10px;
     .header {
