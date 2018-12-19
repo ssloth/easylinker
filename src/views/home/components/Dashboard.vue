@@ -33,16 +33,12 @@
 import echarts from 'echarts'
 import { getClientChartsData } from '@/api/charts'
 
-const option = {
+const defaultOption = {
   tooltip: {
     trigger: 'axis',
     position: function(pt) {
       return [pt[0], '10%']
     }
-  },
-  title: {
-    left: 'center',
-    text: '设备数据量统计'
   },
   toolbox: {
     feature: {
@@ -83,39 +79,48 @@ const option = {
       }
     }
   ],
-  series: []
-}
-
-const defaultSeries = {
-  name: '模拟数据',
-  type: 'line',
-  smooth: true,
-  symbol: 'none',
-  sampling: 'average',
-  itemStyle: {
-    color: 'rgb(255, 70, 131)'
+  grid: {
+    top: 30,
+    x: 30,
+    x2: 0,
+    y2: 60
   },
-  areaStyle: {
-    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-      {
-        offset: 0,
-        color: 'rgb(255, 158, 68)'
+  series: [
+    {
+      name: '模拟数据',
+      type: 'line',
+      smooth: true,
+      symbol: 'none',
+      sampling: 'average',
+      itemStyle: {
+        color: '#e883ae'
       },
-      {
-        offset: 1,
-        color: 'rgb(255, 70, 131)'
-      }
-    ])
-  },
-  data: null
+      areaStyle: {
+        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+          {
+            offset: 0,
+            color: '#E684AE'
+          },
+          {
+            offset: 0.5,
+            color: '#79CBCA'
+          },
+          {
+            offset: 1,
+            color: '#77A1D3'
+          }
+        ])
+      },
+      data: null
+    }
+  ]
 }
 
 export default {
   data() {
     return {
       echarts: null,
-      chartData: {},
-      chartOptions: option
+      option: Object.assign({}, defaultOption)
     }
   },
   mounted() {
@@ -128,18 +133,22 @@ export default {
     },
     _getData() {
       getClientChartsData().then(res => {
-        console.log(res)
-        this.chartData = res.data
-        this._chartUpdate()
+        var base = +new Date(1968, 9, 3)
+        var oneDay = 24 * 3600 * 1000
+        var dateq = []
+        var dataq = [Math.random() * 300]
+        for (var i = 1; i < 20000; i++) {
+          var now = new Date((base += oneDay))
+          dateq.push(
+            [now.getFullYear(), now.getMonth() + 1, now.getDate()].join('/')
+          )
+          dataq.push(Math.round((Math.random() - 0.5) * 20 + dataq[i - 1]))
+        }
+        const { data, date } = res.data
+        this.option.xAxis.data = date
+        this.option.series[0].data = data
+        this.echarts.setOption(this.option)
       })
-    },
-    _chartUpdate() {
-      const series = defaultSeries
-      this.chartOptions.xAxis = this.chartData.data
-      series.date = this.chartData.date
-      this.chartOptions.series = [series]
-      console.log(this.chartOptions)
-      setTimeout(_ => this.echarts.setOption(this.chartOption), 500)
     }
   }
 }
